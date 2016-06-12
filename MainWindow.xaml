@@ -1,0 +1,81 @@
+﻿<Window x:Class="academy_project.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow"
+        WindowStartupLocation="CenterScreen" 
+        Height="600" Width="800"
+        Activated="MainWindow_OnActivated"
+        PreviewKeyDown="OnKeyDown"
+        KeyUp="OnKeyUp"
+        >
+
+    <DockPanel>
+        <Border BorderThickness="50"
+                BorderBrush="MediumSpringGreen">
+            <Canvas
+                           HorizontalAlignment="Center"
+                           Height="500"  
+                           VerticalAlignment="Center"
+                           Width="700"
+                           Background="SpringGreen">
+                <Label x:Name="Player1Name"
+                       Canvas.Left="100"
+                       Canvas.Top="-35"
+                       FontFamily="Rockwell"
+                       FontSize="20"
+                       Content=""></Label>
+                <Line HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Stroke="White"
+                           StrokeThickness="2" X1="350" X2="350" Y2="500"/>
+                <Ellipse Height="150" 
+                           Stroke="White"
+                           StrokeThickness="2"
+                           Width="150"
+                           Canvas.Left="275"
+                           Canvas.Top="175"/>
+                <Rectangle Height="100"
+                           Stroke="Black"
+                           StrokeThickness="2" 
+                           Width="45"
+                           Canvas.Top="200"
+                           Canvas.Right="-43"/>
+                <Rectangle Height="100"
+                           Stroke="Black"
+                           StrokeThickness="2" 
+                           Width="45"
+                           Canvas.Top="200"
+                           Canvas.Left="-43"/>
+                <Rectangle Height="150"
+                           Stroke="White"
+                           StrokeThickness="2" 
+                           Width="90"
+                           Canvas.Top="175"/>
+                <Rectangle
+                            Height="500"
+                            Stroke="White"
+                            StrokeThickness="2"
+                            Width="700"/>
+                <Rectangle Height="150"
+                           Stroke="White"
+                           StrokeThickness="2" 
+                           Width="90"
+                           Canvas.Top="175"
+                           Canvas.Right="0"/>
+                <Label x:Name="Player2Name"
+                	Canvas.Left="450"
+                	Canvas.Top="-35"
+                	FontFamily="Rockwell"
+                	FontSize="20"
+                	Content=""/>
+
+
+            </Canvas>
+        </Border>
+        <Canvas x:Name="Pitch"
+                Height="500"
+                Width="0"/>
+
+    </DockPanel>
+
+</Window>
