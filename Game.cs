@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Shapes;
 
 namespace academy_project
 {
@@ -79,6 +73,20 @@ namespace academy_project
             DecrementSpeed();
         }
 
+        public void SetPlayersPosition()
+        {
+            List<Player> players = _gameObjects.
+                OfType<Player>().ToList();
+            foreach (var player in players)
+            {
+                if (player.Id == 1)
+                {
+                    player.Position = Constants.StartingPlayer1Position;
+                }
+                else player.Position = Constants.StartingPlayer2Position;
+            }
+        }
+
         public void DecrementSpeed()
         {
             Ball ball = _gameObjects.OfType<Ball>().SingleOrDefault();
@@ -136,6 +144,7 @@ namespace academy_project
                     window.Player1Points.Content = prev + 1;
                     ball.Position = Constants.StartingBallPosition;
                     ball.Speed = 0;
+                    SetPlayersPosition();
                 }
                 else if (result == 2)
                 {
@@ -143,6 +152,7 @@ namespace academy_project
                     window.Player2Points.Content = prev + 1;
                     ball.Position = Constants.StartingBallPosition;
                     ball.Speed = 0;
+                    SetPlayersPosition();
                 }
             }
             else if (midA.Y - ball.Size.Height/2 <= 0 && midA.X - ball.Size.Width/2 <= 7 ||

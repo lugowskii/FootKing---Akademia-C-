@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -21,8 +16,7 @@ namespace academy_project
             Id = id;
             Color = new Color();
             Color = Color.FromArgb(255, 255, 20, 0);
-            Position = new Point(100 - Constants.PlayerSize.Width/2, 
-                (Constants.Height / 2) - (Constants.PlayerSize.Height / 2));
+            Position = Constants.StartingPlayer1Position;
             Size = Constants.PlayerSize;
             ObjectEllipse = new Ellipse();
             Speed = Constants.PlayerSpeed;
@@ -46,8 +40,7 @@ namespace academy_project
             Id = id;
             Name = name;
             Color = color;
-            Position = new Point(100- Constants.PlayerSize.Width/2,
-                (Constants.Height / 2) - (Constants.PlayerSize.Height / 2));
+            Position = Constants.StartingPlayer1Position;
             Size = Constants.PlayerSize;
             ObjectEllipse = new Ellipse();
             Speed = Constants.PlayerSpeed;

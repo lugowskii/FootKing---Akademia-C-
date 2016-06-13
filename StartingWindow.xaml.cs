@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace academy_project
 {
@@ -54,7 +44,7 @@ namespace academy_project
                 new Player(2,Player2Name.Text,
                     Player2Color, 
                     Constants.PlayerSize,
-                    new Point(615-Constants.PlayerSize.Width/2, (Constants.Height / 2) - (Constants.PlayerSize.Height / 2))),
+                    Constants.StartingPlayer2Position),
                 new Ball(BallColor),
                 window.Pitch);
             window.InitGame(StartingData);
@@ -68,7 +58,7 @@ namespace academy_project
             e.Cancel = true;
             var anim = new DoubleAnimation(0, (Duration)TimeSpan.FromSeconds(1));
             anim.Completed += (s, _) => this.Close();
-            this.BeginAnimation(UIElement.OpacityProperty, anim);
+            BeginAnimation(UIElement.OpacityProperty, anim);
         }
     }
 }

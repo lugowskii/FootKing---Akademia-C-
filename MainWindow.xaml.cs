@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Timers;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
@@ -41,8 +40,8 @@ namespace academy_project
             {
                 _game.ProcessKeys();
             }
-            _game.MoveBall();
             _game.DrawObjects();
+            _game.MoveBall();
                 
         }
 
