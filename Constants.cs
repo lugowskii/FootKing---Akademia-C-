@@ -9,6 +9,7 @@ namespace academy_project
         public const int TimeSpan = 10;
         public const double PlayerSpeed = 1.0;
         public const double TimeSpeedMultiplier = 20;
+        public const double DistanceEps = PlayerSpeed*2;
         public static readonly Size PlayerSize = new Size(30, 30);
         public static readonly Size BallSize = new Size(20, 20);
         public static readonly Point StartingBallPosition = 

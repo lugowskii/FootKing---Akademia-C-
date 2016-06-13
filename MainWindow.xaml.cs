@@ -38,8 +38,9 @@ namespace academy_project
             if (_game.IsAnyKeyPressed())
             {
                 _game.ProcessKeys();
-                _game.DrawObjects();
             }
+            _game.MoveBall();
+            _game.DrawObjects();
                 
         }
 

@@ -71,8 +71,8 @@ namespace academy_project
 
         public override void Move(double x, double y)
         {
-            if ((Position.X + x * NormalizedSpeed < Constants.Width - 7) &&
-                (Position.X + x * NormalizedSpeed > 0 - 7) &&
+            if ((Position.X + x * NormalizedSpeed < Constants.Width - Size.Width/2) &&
+                (Position.X + x * NormalizedSpeed > 0 - Size.Width/2) &&
                 (Position.Y + y * NormalizedSpeed > 0 - Constants.PlayerSize.Height / 2) &&
                 (Position.Y + y * NormalizedSpeed < (Constants.Height - Constants.PlayerSize.Height / 2)))
             {

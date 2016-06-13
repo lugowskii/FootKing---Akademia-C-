@@ -72,7 +72,20 @@ namespace academy_project
 
         }
 
-        public double CalculateDistanceBetweenObjects(FieldObject a, FieldObject b, int x, int y)
+        public void MoveBall()
+        {
+            CheckForBallCollisions();
+            CheckForBallWallCollision();
+            DecrementSpeed();
+        }
+
+        public void DecrementSpeed()
+        {
+            Ball ball = _gameObjects.OfType<Ball>().SingleOrDefault();
+            ball.DecrementSpeed();
+        }
+
+        public double CalculateDistanceBetweenObjects(FieldObject a, FieldObject b, double x, double y)
         {
             Point midA = new Point(a.Position.X + a.Size.Width/2,
                 a.Position.Y + a.Size.Height/2);
@@ -80,50 +93,74 @@ namespace academy_project
             Point midB = new Point(b.Position.X + b.Size.Width/2,
                 b.Position.Y + b.Size.Height/2);
             double rB = b.Size.Width/2;
-            double midDistance = (Math.Sqrt(
+            double midDistance = Math.Floor(Math.Sqrt(
                 (Math.Pow((midB.X - (midA.X + x*a.NormalizedSpeed)), 2)) +
                 (Math.Pow((midB.Y - (midA.Y + y*a.NormalizedSpeed)), 2))));
+            return midDistance;
+        }
+
+        public void CheckForBallWallCollision()
+        {
+            Ball ball = _gameObjects.OfType<Ball>().SingleOrDefault();
+            double r = ball.Size.Width / 2;
+            Point midA = new Point(ball.Position.X + ball.Size.Width / 2,
+    ball.Position.Y + ball.Size.Height / 2);
+            double x = ball.LastVector.X;
+            double y = ball.LastVector.Y;
+            if (midA.Y - ball.Size.Height/2 <= 0 && midA.X - ball.Size.Width/2 <= 7 ||
+                midA.Y - ball.Size.Height/2 <= 0 && midA.X + ball.Size.Width/2 >= Constants.Width+7 ||
+                midA.Y + ball.Size.Height/2 >= Constants.Height && midA.X - ball.Size.Width/2 <= 7 ||
+                midA.Y + ball.Size.Height/2 >= Constants.Height && midA.X + ball.Size.Width/2 >= Constants.Width+7)
+            {
+                x = -x;
+                y = -y;
+            }
+            else if (midA.Y - ball.Size.Height/2 <= 7 || //UP && //DOWN
+                midA.Y + ball.Size.Height/2 >= Constants.Height)
+            {
+                y = -y;
+            }
+            else if (midA.X - ball.Size.Width/2 <= 7 ||
+                midA.X + ball.Size.Width/2 >= Constants.Width+7)
+            {
+                x = -x;
+            }
+
+            ball.Move(x, y);
         }
 
         public void CheckForBallCollisions()
         {
             Ball ball = _gameObjects.OfType<Ball>().SingleOrDefault();
-            Point midA = new Point(ball.Position.X + ball.Size.Width / 2,
-                ball.Position.Y + ball.Size.Height / 2);
             double rA = ball.Size.Width / 2;
             foreach (var fieldObject in _gameObjects)
             {
                 if (ball.Equals(fieldObject)) continue;
-                Point midB = new Point(fieldObject.Position.X + fieldObject.Size.Width / 2,
-    fieldObject.Position.Y + fieldObject.Size.Height / 2);
                 double rB = fieldObject.Size.Width / 2;
-                double midDistance = (Math.Sqrt(
-                    (Math.Pow((midB.X - (midA.X + x * player.NormalizedSpeed)), 2)) +
-                    (Math.Pow((midB.Y - (midA.Y + y * player.NormalizedSpeed)), 2))));
-                if (midDistance < rA + rB)
+                double midDistance = CalculateDistanceBetweenObjects(ball, fieldObject, 0, 0);
+                if (midDistance - Constants.DistanceEps <= rA + rB)
                 {
-                    return true;
+                    double x = ball.Position.X - fieldObject.Position.X;
+                    double y = ball.Position.Y - fieldObject.Position.Y;
+                    double normalizer = Math.Abs(x) + Math.Abs(y);
+                    x /= normalizer;
+                    y /= normalizer;
+                    ball.Speed = fieldObject.Speed;
+                    ball.Move(x, y);
                 }
             }
         }
 
-        
 
         public bool PlayerCollidesWithObject(Player player, double x, double y)
         {
-            Point midA = new Point(player.Position.X + player.Size.Width/2,
-                player.Position.Y + player.Size.Height/2);
             double rA = player.Size.Width/2;
             foreach (var fieldObject in _gameObjects)
             {
                 if (player.Equals(fieldObject)) continue;
-                Point midB = new Point(fieldObject.Position.X + fieldObject.Size.Width/2,
-    fieldObject.Position.Y + fieldObject.Size.Height/2);
                 double rB = fieldObject.Size.Width/2;
-                double midDistance = (Math.Sqrt(
-                    (Math.Pow((midB.X - (midA.X+x*player.NormalizedSpeed)), 2)) + 
-                    (Math.Pow((midB.Y - (midA.Y+y*player.NormalizedSpeed)), 2))));
-                if (midDistance < rA + rB)
+                double midDistance = CalculateDistanceBetweenObjects(player, fieldObject, x, y);
+                if (midDistance+Constants.DistanceEps <= rA + rB)
                 {
                     return true;
                 }
@@ -142,7 +179,6 @@ namespace academy_project
                 {
                     player.Move(x, y); 
                 }
-                else CheckForBallCollisions();
             }
             catch (ArgumentNullException)
             {
