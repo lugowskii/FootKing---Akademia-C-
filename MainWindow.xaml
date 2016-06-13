@@ -18,16 +18,13 @@
                            VerticalAlignment="Center"
                            Width="700"
                            Background="SpringGreen">
-                <Label x:Name="Player1Name"
-                       Canvas.Left="100"
-                       Canvas.Top="-35"
-                       FontFamily="Rockwell"
-                       FontSize="20"
-                       Content=""></Label>
                 <Line HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            Stroke="White"
-                           StrokeThickness="2" X1="350" X2="350" Y2="500"/>
+                           StrokeThickness="2"
+                           X1="350"
+                           X2="350"
+                           Y2="500"/>
                 <Ellipse Height="150" 
                            Stroke="White"
                            StrokeThickness="2"
@@ -52,10 +49,10 @@
                            Width="90"
                            Canvas.Top="175"/>
                 <Rectangle
-                            Height="500"
-                            Stroke="White"
-                            StrokeThickness="2"
-                            Width="700"/>
+                           Height="500"
+                           Stroke="White"
+                           StrokeThickness="2"
+                           Width="700"/>
                 <Rectangle Height="150"
                            Stroke="White"
                            StrokeThickness="2" 
@@ -63,19 +60,34 @@
                            Canvas.Top="175"
                            Canvas.Right="0"/>
                 <Label x:Name="Player2Name"
-                	Canvas.Left="450"
-                	Canvas.Top="-35"
-                	FontFamily="Rockwell"
-                	FontSize="20"
-                	Content=""/>
-
-
+                	       Canvas.Left="462"
+                	       Canvas.Top="-35"
+                	       FontFamily="Rockwell"
+                	       FontSize="20"
+                	       Content=""/>
+                <Label x:Name="Player1Name"
+                           Canvas.Left="190"
+                           Canvas.Top="-34"
+                           FontFamily="Rockwell"
+                           FontSize="20"
+                           Content=""></Label>
+                <Label x:Name="Player1Points"
+                           Canvas.Left="323"
+                           Canvas.Top="-34"
+                           FontFamily="Rockwell"
+                           FontSize="20"
+                           Content=""></Label>
+                <Label x:Name="Player2Points"
+                           Canvas.Left="366"
+                           Canvas.Top="-34"
+                           FontFamily="Rockwell"
+                           FontSize="20"
+                           Content=""></Label>
             </Canvas>
         </Border>
         <Canvas x:Name="Pitch"
                 Height="500"
                 Width="0"/>
-
     </DockPanel>
 
 </Window>

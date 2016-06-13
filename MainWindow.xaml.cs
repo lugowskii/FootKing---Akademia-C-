@@ -21,8 +21,10 @@ namespace academy_project
         public void InitGame(StartingData data)
         {
             _game = new Game(data.Pitch);
-            Player1Name.Content = data.Player1.Name+": 0";
-            Player2Name.Content = data.Player2.Name + ": 0";
+            Player1Name.Content = data.Player1.Name;
+            Player1Points.Content = 0;
+            Player2Name.Content = data.Player2.Name;
+            Player2Points.Content = 0;
             _game.AddObjectToGame(data.Player1);
             _game.AddObjectToGame(data.Player2);
             _game.AddObjectToGame(data.Ball);

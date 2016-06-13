@@ -99,6 +99,22 @@ namespace academy_project
             return midDistance;
         }
 
+        public int GoalLineDecision()
+        {
+            Ball ball = _gameObjects.OfType<Ball>().SingleOrDefault();
+            Point midA = new Point(ball.Position.X + ball.Size.Width / 2,
+    ball.Position.Y + ball.Size.Height / 2);
+            if (midA.X + ball.Size.Width/2 < 0)
+            {
+                return 2;
+            }
+            if (midA.X - ball.Size.Width/2 > Constants.Width)
+            {
+                return 1;
+            }
+            return 0;
+        }
+
         public void CheckForBallWallCollision()
         {
             Ball ball = _gameObjects.OfType<Ball>().SingleOrDefault();
@@ -107,11 +123,33 @@ namespace academy_project
     ball.Position.Y + ball.Size.Height / 2);
             double x = ball.LastVector.X;
             double y = ball.LastVector.Y;
-            if (midA.Y - ball.Size.Height/2 <= 0 && midA.X - ball.Size.Width/2 <= 7 ||
+            if (ball.Position.Y >= Constants.Height/2-50 &&
+                ball.Position.Y <= Constants.Height/2+50)
+            {
+                var window = (MainWindow)Application.Current.Windows.
+                    OfType<Window>().
+                    SingleOrDefault(w => w.IsActive);
+                int result = GoalLineDecision();
+                if (result == 1)
+                {
+                    int prev = Int32.Parse(window.Player1Points.Content.ToString());
+                    window.Player1Points.Content = prev + 1;
+                    ball.Position = Constants.StartingBallPosition;
+                    ball.Speed = 0;
+                }
+                else if (result == 2)
+                {
+                    int prev = Int32.Parse(window.Player2Points.Content.ToString());
+                    window.Player2Points.Content = prev + 1;
+                    ball.Position = Constants.StartingBallPosition;
+                    ball.Speed = 0;
+                }
+            }
+            else if (midA.Y - ball.Size.Height/2 <= 0 && midA.X - ball.Size.Width/2 <= 7 ||
                 midA.Y - ball.Size.Height/2 <= 0 && midA.X + ball.Size.Width/2 >= Constants.Width+7 ||
                 midA.Y + ball.Size.Height/2 >= Constants.Height && midA.X - ball.Size.Width/2 <= 7 ||
                 midA.Y + ball.Size.Height/2 >= Constants.Height && midA.X + ball.Size.Width/2 >= Constants.Width+7)
-            {
+            {//corners
                 x = -x;
                 y = -y;
             }
@@ -125,7 +163,7 @@ namespace academy_project
             {
                 x = -x;
             }
-
+            else return;
             ball.Move(x, y);
         }
 
