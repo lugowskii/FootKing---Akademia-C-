@@ -90,7 +90,7 @@ namespace academy_project
         public void DecrementSpeed()
         {
             Ball ball = _gameObjects.OfType<Ball>().SingleOrDefault();
-            ball.DecrementSpeed();
+            if (ball != null) ball.DecrementSpeed();
         }
 
         public double CalculateDistanceBetweenObjects(FieldObject a, FieldObject b, double x, double y)
