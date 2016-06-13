@@ -15,19 +15,18 @@ namespace academy_project
     {
         public int Id { get; set; }
         public String Name { get; set; }
-        private double Speed { get; set; }
         private int Points { get; set; }
-        private Ellipse PlayerEllipse { get; set; }
         public Player(int id)
         {
             Id = id;
             Color = new Color();
             Color = Color.FromArgb(255, 255, 20, 0);
-            Position = new Point(100, 
+            Position = new Point(100 - Constants.PlayerSize.Width/2, 
                 (Constants.Height / 2) - (Constants.PlayerSize.Height / 2));
             Size = Constants.PlayerSize;
-            PlayerEllipse = new Ellipse();
+            ObjectEllipse = new Ellipse();
             Speed = Constants.PlayerSpeed;
+            NormalizedSpeed = Speed / Constants.TimeSpan * Constants.TimeSpeedMultiplier;
         }
 
         public Player(int id, String name, Color color, Size size, Point position)
@@ -37,8 +36,9 @@ namespace academy_project
             Color = color;
             Size = size;
             Position = position;
-            PlayerEllipse = new Ellipse();
+            ObjectEllipse = new Ellipse();
             Speed = Constants.PlayerSpeed;
+            NormalizedSpeed = Speed / Constants.TimeSpan * Constants.TimeSpeedMultiplier;
         }
 
         public Player(int id, String name, Color color)
@@ -46,38 +46,38 @@ namespace academy_project
             Id = id;
             Name = name;
             Color = color;
-            Position = new Point(100,
+            Position = new Point(100- Constants.PlayerSize.Width/2,
                 (Constants.Height / 2) - (Constants.PlayerSize.Height / 2));
             Size = Constants.PlayerSize;
-            PlayerEllipse = new Ellipse();
+            ObjectEllipse = new Ellipse();
             Speed = Constants.PlayerSpeed;
+            NormalizedSpeed = Speed / Constants.TimeSpan * Constants.TimeSpeedMultiplier;
         }
 
         public override void Draw(Canvas pitch)
         {
-            PlayerEllipse.Height = Size.Height;
-            PlayerEllipse.Name = "PlayerEllipse";
-            PlayerEllipse.Width = Size.Width;
-            Canvas.SetLeft(PlayerEllipse, -Constants.Width+Position.X-50);
-            Canvas.SetTop(PlayerEllipse, Position.Y);
-            //PlayerEllipse.Margin = new Thickness(-Constants.Width + Position.X, Position.Y, 0, 0);
+            ObjectEllipse.Height = Size.Height;
+            ObjectEllipse.Name = "PlayerEllipse";
+            ObjectEllipse.Width = Size.Width;
+            Canvas.SetLeft(ObjectEllipse, -Constants.Width+Position.X-50);
+            Canvas.SetTop(ObjectEllipse, Position.Y);
+            //ObjectEllipse.Margin = new Thickness(-Constants.Width + Position.X, Position.Y, 0, 0);
             SolidColorBrush mySolidColorBrush = new SolidColorBrush(Color);
-            PlayerEllipse.Fill = mySolidColorBrush;
-            PlayerEllipse.StrokeThickness = 1;
-            PlayerEllipse.Stroke = Brushes.Black;
-            pitch.Children.Add(PlayerEllipse);
+            ObjectEllipse.Fill = mySolidColorBrush;
+            ObjectEllipse.StrokeThickness = 1;
+            ObjectEllipse.Stroke = Brushes.Black;
+            pitch.Children.Add(ObjectEllipse);
         }
 
         public override void Move(double x, double y)
         {
-            double normalizedSpeed = Speed*Constants.TimeSpan/30;
-            if ((Position.X + x * normalizedSpeed < Constants.Width - 7) &&
-                (Position.X + x * normalizedSpeed > 0 - 7) &&
-                (Position.Y + y * normalizedSpeed > 0 - Constants.PlayerSize.Height / 2) &&
-                (Position.Y + y * normalizedSpeed < (Constants.Height - Constants.PlayerSize.Height / 2)))
+            if ((Position.X + x * NormalizedSpeed < Constants.Width - 7) &&
+                (Position.X + x * NormalizedSpeed > 0 - 7) &&
+                (Position.Y + y * NormalizedSpeed > 0 - Constants.PlayerSize.Height / 2) &&
+                (Position.Y + y * NormalizedSpeed < (Constants.Height - Constants.PlayerSize.Height / 2)))
             {
-                Position = new Point(Position.X + x * normalizedSpeed, 
-                    Position.Y + y * normalizedSpeed);
+                Position = new Point(Position.X + x * NormalizedSpeed, 
+                    Position.Y + y * NormalizedSpeed);
             }
             //Position.Offset(x, y);
         }

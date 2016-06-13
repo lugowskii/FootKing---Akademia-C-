@@ -54,7 +54,7 @@ namespace academy_project
                 new Player(2,Player2Name.Text,
                     Player2Color, 
                     Constants.PlayerSize,
-                    new Point(600-15, (Constants.Height / 2) - (Constants.PlayerSize.Height / 2))),
+                    new Point(615-Constants.PlayerSize.Width/2, (Constants.Height / 2) - (Constants.PlayerSize.Height / 2))),
                 new Ball(BallColor),
                 window.Pitch);
             window.InitGame(StartingData);

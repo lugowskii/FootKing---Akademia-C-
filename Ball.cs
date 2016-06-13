@@ -15,7 +15,6 @@ namespace academy_project
         private Enum Direction { get; set; }
         private Boolean IsMoving { get; set; }
         private Double Speed { get; set; }
-        private Ellipse BallEllipse { get; set; }
 
         public Ball()
         {
@@ -24,7 +23,7 @@ namespace academy_project
             Position = Constants.StartingBallPosition;
             Direction = Directions.None;
             IsMoving = false;
-            BallEllipse = new Ellipse();
+            ObjectEllipse = new Ellipse();
             Speed = 0;
         }
 
@@ -35,7 +34,7 @@ namespace academy_project
             Position = position;
             Direction = direction;
             IsMoving = false;
-            BallEllipse = new Ellipse();
+            ObjectEllipse = new Ellipse();
             Speed = 0;
         }
 
@@ -46,29 +45,28 @@ namespace academy_project
             Position = Constants.StartingBallPosition;
             Direction = Directions.None;
             IsMoving = false;
-            BallEllipse = new Ellipse();
+            ObjectEllipse = new Ellipse();
             Speed = 0;
         }
 
         public override void Draw(Canvas pitch)
         {
-            BallEllipse.Height = Size.Height;
-            BallEllipse.Width = Size.Width;
-            BallEllipse.Name = "BallEllipse";
-            Canvas.SetLeft(BallEllipse, -Constants.Width + Position.X- 50);
-            Canvas.SetTop(BallEllipse, Position.Y);
+            ObjectEllipse.Height = Size.Height;
+            ObjectEllipse.Width = Size.Width;
+            ObjectEllipse.Name = "BallEllipse";
+            Canvas.SetLeft(ObjectEllipse, -Constants.Width + Position.X- 50);
+            Canvas.SetTop(ObjectEllipse, Position.Y);
             SolidColorBrush mySolidColorBrush = new SolidColorBrush(Color);
-            BallEllipse.Fill = mySolidColorBrush;
-            BallEllipse.StrokeThickness = 1;
-            BallEllipse.Stroke = Brushes.Black;
-            pitch.Children.Add(BallEllipse);
+            ObjectEllipse.Fill = mySolidColorBrush;
+            ObjectEllipse.StrokeThickness = 1;
+            ObjectEllipse.Stroke = Brushes.Black;
+            pitch.Children.Add(ObjectEllipse);
         }
 
         //public void DecrementSpeed(double )
 
         public override void Move(double x, double y)
         {
-            
             Position.Offset(x, y);
         }
     }

@@ -5,8 +5,8 @@
         WindowStartupLocation="CenterScreen" 
         Height="600" Width="800"
         Activated="MainWindow_OnActivated"
-        PreviewKeyDown="OnKeyDown"
-        KeyUp="OnKeyUp"
+        KeyDown="OnKeyDown"
+        PreviewKeyUp="OnKeyUp"
         >
 
     <DockPanel>

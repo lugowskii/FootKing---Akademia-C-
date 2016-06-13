@@ -69,15 +69,90 @@ namespace academy_project
                 if (key == Key.D)
                     MovePlayer(2, 1, 0);
             }
-           
+
+        }
+
+        public double CalculateDistanceBetweenObjects(FieldObject a, FieldObject b, int x, int y)
+        {
+            Point midA = new Point(a.Position.X + a.Size.Width/2,
+                a.Position.Y + a.Size.Height/2);
+            double rA = a.Size.Width/2;
+            Point midB = new Point(b.Position.X + b.Size.Width/2,
+                b.Position.Y + b.Size.Height/2);
+            double rB = b.Size.Width/2;
+            double midDistance = (Math.Sqrt(
+                (Math.Pow((midB.X - (midA.X + x*a.NormalizedSpeed)), 2)) +
+                (Math.Pow((midB.Y - (midA.Y + y*a.NormalizedSpeed)), 2))));
+        }
+
+        public void CheckForBallCollisions()
+        {
+            Ball ball = _gameObjects.OfType<Ball>().SingleOrDefault();
+            Point midA = new Point(ball.Position.X + ball.Size.Width / 2,
+                ball.Position.Y + ball.Size.Height / 2);
+            double rA = ball.Size.Width / 2;
+            foreach (var fieldObject in _gameObjects)
+            {
+                if (ball.Equals(fieldObject)) continue;
+                Point midB = new Point(fieldObject.Position.X + fieldObject.Size.Width / 2,
+    fieldObject.Position.Y + fieldObject.Size.Height / 2);
+                double rB = fieldObject.Size.Width / 2;
+                double midDistance = (Math.Sqrt(
+                    (Math.Pow((midB.X - (midA.X + x * player.NormalizedSpeed)), 2)) +
+                    (Math.Pow((midB.Y - (midA.Y + y * player.NormalizedSpeed)), 2))));
+                if (midDistance < rA + rB)
+                {
+                    return true;
+                }
+            }
+        }
+
+        
+
+        public bool PlayerCollidesWithObject(Player player, double x, double y)
+        {
+            Point midA = new Point(player.Position.X + player.Size.Width/2,
+                player.Position.Y + player.Size.Height/2);
+            double rA = player.Size.Width/2;
+            foreach (var fieldObject in _gameObjects)
+            {
+                if (player.Equals(fieldObject)) continue;
+                Point midB = new Point(fieldObject.Position.X + fieldObject.Size.Width/2,
+    fieldObject.Position.Y + fieldObject.Size.Height/2);
+                double rB = fieldObject.Size.Width/2;
+                double midDistance = (Math.Sqrt(
+                    (Math.Pow((midB.X - (midA.X+x*player.NormalizedSpeed)), 2)) + 
+                    (Math.Pow((midB.Y - (midA.Y+y*player.NormalizedSpeed)), 2))));
+                if (midDistance < rA + rB)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void MovePlayer(int id, double x, double y)
         {
-            Player player = _gameObjects.OfType<Player>().
-                Where(p => p.Id.Equals(id)).
-                SingleOrDefault();
-            player.Move(x, y);
+            try
+            {
+                Player player = _gameObjects.
+                    OfType<Player>().
+                    SingleOrDefault(p => p.Id.Equals(id));
+                if (!PlayerCollidesWithObject(player, x, y))
+                {
+                    player.Move(x, y); 
+                }
+                else CheckForBallCollisions();
+            }
+            catch (ArgumentNullException)
+            {
+                Console.Error.WriteLine("Argument is null!");
+            }
+            catch (InvalidOperationException)
+            {
+                Console.Error.WriteLine("Invalid operation on structure");
+            }
+
         }
 
         public void DrawObjects()
